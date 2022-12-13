@@ -16,12 +16,16 @@ import (
 
 var Endian binary.ByteOrder
 
+var IsBigEndian bool
+
 func init() {
 	b := uint16(0xff) // one byte
 	if *(*byte)(unsafe.Pointer(&b)) == 0 {
 		Endian = binary.BigEndian
+		IsBigEndian = true
 	} else {
 		Endian = binary.LittleEndian
+		IsBigEndian = false
 	}
 	log.Printf("github.com/josharian/native: unrecognized arch %v (%v), please file an issue", runtime.GOARCH, Endian)
 }
